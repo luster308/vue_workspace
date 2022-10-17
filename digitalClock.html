@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>digital clock</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  </head>
+  <body>
+      <div id="app">
+        <p>{{timeString}}</p>
+      </div>
+      <script>
+
+        window.onload = function() {
+          setInterval(app.nowTime, 1000);
+        }
+
+        const app = new Vue({
+          el: "#app",
+          data: {
+            timeString: ""
+          },
+          methods: {
+            nowTime : function() {
+                let date = new Date();
+                let yyyy = date.getFullYear();
+                let MM = date.getMonth() + 1;
+                let dd = date.getDate();
+                this.timeString = yyyy + "년 "
+                  + MM + "월 "
+                  + dd + "일 "
+                  + date.getHours() + ":"
+                  + date.getMinutes() + ":" +
+                  date.getSeconds();
+              console.log(this.timeString);
+              }
+          }
+        }); // new Vue
+
+      </script>
+  </body>
+</html>
