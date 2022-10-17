@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>hello vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--
+      data 객체의 property(속성)를 바인딩하는 템플릿
+      data 객체의 프라퍼티의 값이 변경되면 View도 변경됨(바인딩).
+      -->
+        {{message}}&nbsp;{{message2}}
+    </div>
+    <script>
+      // Vue 객체(Vue 인스턴스 생성)
+      // 생성자의 인자로 뷰모델객체를 넣어줌
+      new Vue({
+        el: '#app',   // View가 되는 DOM Element
+        // Model이 되는 data 객체
+        data: {
+          message: 'Hello Vue.js!',
+          message2: 'Bye Vue.js~'
+        }
+      });
+    </script>
+  </body>
+</html>
