@@ -1,21 +1,21 @@
 <template>
-  <div class="clearAllContainer">
-    <span class="clearAllBtn" @click="clearTodo">모두 삭제</span>
-  </div>
+<div class="clearAllContainer">
+  <span class="clearAllBtn" @click="clearTodo">모두 삭제</span>
+</div>
 </template>
 
 <script>
 export default {
-  methods:{
-    clearTodo(){
-      localStorage.clear();
+  methods: {
+    clearTodo() {
+      this.$emit('removeAll');
     }
   }
 }
 </script>
 
 <style scoped>
-.clearAllContainer{
+.clearAllContainer {
   width: 8.5rem;
   height: 50px;
   line-height: 50px;
@@ -23,7 +23,8 @@ export default {
   border-radius: 5px;
   margin: 0 auto;
 }
-.clearAllBtn{
+
+.clearAllBtn {
   color: #e20303;
   display: black;
 }
