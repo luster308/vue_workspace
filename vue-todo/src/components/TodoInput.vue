@@ -1,10 +1,11 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" placeholder="할 일을 입력하세요!" v-on:keypress.enter="addTodo">
+    <input type="text" v-model="newTodoItem" placeholder="할 일을 입력하세요!">
+    일 할 시간: <vue-timepicker v-model="newTodoItem2"></vue-timepicker>
+    <!-- <input type="time" v-model="newTodoItem2" placeholder="일 할 시간을 입력하세요!" v-on:keypress.enter="addTodo"> -->
     <span class="addContainer" v-on:click="addTodo">
       <i class="addBtn fas fa-plus" aria-hidden="true"></i>
     </span>
-
     <modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">경고</h3>
       <span slot="footer" @click="showModal = false">할 일을 입력하세요.
@@ -16,10 +17,12 @@
 
 <script>
 import Modal from './common/Modal.vue'
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 export default {
   data() {
     return {
       newTodoItem: '',
+      newTodoItem2: '',
       showModal: false
     }
   },
@@ -27,7 +30,8 @@ export default {
     addTodo() {
       if (this.newTodoItem !== "") {
         var value = this.newTodoItem && this.newTodoItem.trim();
-				this.$emit('addTodo', value)
+        var value2 = this.newTodoItem2 && this.newTodoItem2.trim();
+				this.$emit('addTodo', value, value2)
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
@@ -35,10 +39,12 @@ export default {
     },
     clearInput() {
       this.newTodoItem = '';
+      this.newTodoItem2 = '';
     }
   },
   components: {
-    Modal: Modal
+    Modal: Modal,
+    VueTimepicker
   }
 }
 </script>

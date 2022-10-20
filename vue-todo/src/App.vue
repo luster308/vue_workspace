@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <template>
 <div id="app">
   <TodoHeader></TodoHeader>
@@ -15,38 +16,60 @@ import TodoFooter from './components/TodoFooter.vue'
 export default {
   data() {
     return {
-      todoItems: []
+      todoItems: [],
+      todoTime: []
     }
   },
   methods: {
-    addTodo(todoItem) {
-      localStorage.setItem(todoItem, todoItem);
-      this.todoItems.push(todoItem);
+    addTodo(todoItem, todoTime) {
+      const url = "http://localhost:8888/Todo/jsp/todowrite.jsp?content="+todoItem+"&time="+todoTime;
+      axios.get(url, {xhrFields: {withCredentials: true}})
+        .then((response) => {
+          console.log(response);
+          let tempdata = { "todocontent" : todoItem, "todotime" : todoTime };
+          this.todoItems.push(tempdata);
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
     },
-    clearAll(){
-      localStorage.clear();
-      this.todoItems = [];
+    clearAll() {
+      const url = "http://localhost:8888/Todo/jsp/todoclearAll.jsp";
+      axios.get(url, {xhrFields: {withCredentials: true}})
+      .then((response) => {
+        this.todoItems = [];
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
     },
-    removeTodo(todoItem, index){
-      localStorage.removeItem(todoItem);
-      this.todoItems.splice(index, 1);
+    removeTodo(todoItem, index) {
+      const url = "http://localhost:8888/Todo/jsp/todoremove.jsp?deletecontent="+todoItem.todocontent;
+      axios.get(url, {xhrFields: {withCredentials: true}})
+      .then((response) => {
+          this.todoItems.splice(index, 1);
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
     }
-  },
+  }, // methods
   created() {
-    var storageLength = localStorage.length;
-    if (storageLength > 0) {
-      for (var i = 0; i < storageLength; i++) {
-        this.todoItems.push(localStorage.key(i));
+    const url = "http://localhost:8888/Todo/jsp/todolist.jsp";
+    axios.get(url, {xhrFields: {withCredentials: true}})
+    .then((response) => {
+      for (var i = 0; i < response.data.length; i++) {
+        this.todoItems.push(response.data[i]);
       }
-    }
-  },
+    })
+  }, // created
   components: {
     'TodoHeader': TodoHeader,
     'TodoInput': TodoInput,
     'TodoList': TodoList,
     'TodoFooter': TodoFooter,
-  }
-}
+  } // components
+} // export default
 </script>
 
 <style>
